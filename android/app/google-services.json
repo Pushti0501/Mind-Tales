@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "27695208586",
+    "project_id": "mindtales-e5224",
+    "storage_bucket": "mindtales-e5224.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:27695208586:android:e33e108b2942e9d317b573",
+        "android_client_info": {
+          "package_name": "com.pushti.mind_tales"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "27695208586-7i96s3abjjn0ve7kik1n2gnvub0gbojo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pushti.mind_tales",
+            "certificate_hash": "67b8bd04e53538fd6fe0b072a46e41052e735e11"
+          }
+        },
+        {
+          "client_id": "27695208586-mq7h1q1oec1u6ck90rfp8jde0mhhq1sm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyfGYPCDXYabisRkowD7k52N-o6ajteDE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "27695208586-mq7h1q1oec1u6ck90rfp8jde0mhhq1sm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models/models.dart';
+import '../providers/uri_controller.dart';
 
 class YogaScreen extends StatefulWidget {
   const YogaScreen({super.key});
@@ -98,78 +100,83 @@ class _YogaScreenState extends State<YogaScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Theme.of(context).primaryColor,
-        appBar: AppBar(
+    return Consumer<Launch>(
+        builder: (context, value, child){
+          return    Scaffold(
           backgroundColor: Theme.of(context).primaryColor,
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-              size: 30,
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          automaticallyImplyLeading: false,
-          title: Text(
-            "Yoga",
-            style: GoogleFonts.inter(
-                fontSize: 20.sp,
+          appBar: AppBar(
+            backgroundColor: Theme.of(context).primaryColor,
+            leading: IconButton(
+              icon: const Icon(
+                Icons.arrow_back,
                 color: Colors.black,
-                fontWeight: FontWeight.w500),
+                size: 30,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            automaticallyImplyLeading: false,
+            title: Text(
+              "Yoga",
+              style: GoogleFonts.inter(
+                  fontSize: 20.sp,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500),
+            ),
           ),
-        ),
-        body: ListView.builder(
-          itemCount: yoga.length,
-          itemBuilder: (BuildContext context, int index) {
-            final yoga_sessions = yoga[index];
-            return Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.network(yoga_sessions.img,
-                          height: 171.h, width: 328.w, fit: BoxFit.cover),
-                    ),
-                    Container(
-                      height: 35.h,
-                      width: 328.w,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(10.0),
-                            bottomRight: Radius.circular(10.0)),
-                        color: Colors.black38,
+          body: ListView.builder(
+            itemCount: yoga.length,
+            itemBuilder: (BuildContext context, int index) {
+              final yoga_sessions = yoga[index];
+              return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(yoga_sessions.img,
+                            height: 171.h, width: 328.w, fit: BoxFit.cover),
                       ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 12.w, vertical: 6.5.h),
-                        child: Text(
-                          yoga_sessions.description,
-                          style: GoogleFonts.inter(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white),
+                      Container(
+                        height: 35.h,
+                        width: 328.w,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(10.0),
+                              bottomRight: Radius.circular(10.0)),
+                          color: Colors.black38,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 12.w, vertical: 6.5.h),
+                          child: Text(
+                            yoga_sessions.description,
+                            style: GoogleFonts.inter(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white),
+                          ),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      top: 4.h,
-                      bottom: 12.h,
-                      child: InkWell(
-                        onTap: () {
-                          _launchURL(yoga_sessions.url);
-                        },
-                        child: SvgPicture.asset("images/icons/Play.svg",
-                            width: 35.w, height: 35.h),
+                      Positioned(
+                        top: 4.h,
+                        bottom: 12.h,
+                        child: InkWell(
+                          onTap: () {
+                            Provider.of<Launch>(context).launchURL(yoga_sessions.url);
+                          },
+                          child: SvgPicture.asset("images/icons/Play.svg",
+                              width: 35.w, height: 35.h),
+                        ),
                       ),
-                    ),
-                  ],
-                ));
-          },
-        ));
+                    ],
+                  ));
+            },
+          ));
+        }
+   
+    );
   }
 }

@@ -12,7 +12,7 @@ import 'package:mind_tales/screens/OTPVerification.dart';
 import 'package:mind_tales/screens/SignUpScreen.dart';
 
 import '../constants.dart';
-
+ enum authProblems { UserNotFound, PasswordNotValid, NetworkError }
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -28,6 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool islogin = false;
   late String _username;
   late String _contactnumber;
+ 
 
   authentication() async {
     final validity = _formkey.currentState!.validate();
@@ -43,9 +44,14 @@ class _LoginScreenState extends State<LoginScreen> {
     UserCredential authresult;
     try {
       if (islogin) {
-        authresult = await auth.signInWithEmailAndPassword(
+      
+            try {
+      authresult = await auth.signInWithEmailAndPassword(
             email: _email, password: _password);
-      } else {
+} catch (e) {
+  print("------");
+ print(e);
+      } }else {
         authresult = await auth.createUserWithEmailAndPassword(
             email: _email, password: _password);
         String uid = authresult.user!.uid;
@@ -105,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => OTPVerification(),
+              builder: (context) => const OTPVerification(),
             ));
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
@@ -167,13 +173,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 showDialog(
                                   context: context,
                                   builder: (_) => AlertDialog(
-                                    title: Text('Password Reset Email Sent'),
-                                    content: Text(
+                                    title: const Text('Password Reset Email Sent'),
+                                    content: const Text(
                                         'Please check your email to reset your password.'),
                                     actions: [
                                       TextButton(
                                         onPressed: () => Navigator.pop(context),
-                                        child: Text('OK'),
+                                        child: const Text('OK'),
                                       ),
                                     ],
                                   ),
@@ -191,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 51.0.h,
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: 5),
+                        padding: const EdgeInsets.symmetric(vertical: 5),
                         // margin: EdgeInsets.only(left: 20,right: 20),
                         width: double.infinity,
                         decoration: BoxDecoration(
@@ -220,35 +226,35 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                             child: Text('Sign In', style: kbutton)),
                       ),
-                      SizedBox(
-                        height: 26.h,
-                      ),
-                      Text(
-                        'Or',
-                        style: kskipbutton,
-                      ),
-                      SizedBox(
-                        height: 26.h,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          signup();
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                                height: 25.h,
-                                child: Image.asset('images/google.png')),
-                            SizedBox(width: 10.w),
-                            Text('Continue with Google',
-                                style: GoogleFonts.inter(
-                                    color: Colors.black,
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w500)),
-                          ],
-                        ),
-                      ),
+                      // SizedBox(
+                      //   height: 26.h,
+                      // ),
+                      // Text(
+                      //   'Or',
+                      //   style: kskipbutton,
+                      // ),
+                      // SizedBox(
+                      //   height: 26.h,
+                      // ),
+                      // InkWell(
+                      //   onTap: () {
+                      //     signup();
+                      //   },
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     children: [
+                      //       SizedBox(
+                      //           height: 25.h,
+                      //           child: Image.asset('images/google.png')),
+                      //       SizedBox(width: 10.w),
+                      //       Text('Continue with Google',
+                      //           style: GoogleFonts.inter(
+                      //               color: Colors.black,
+                      //               fontSize: 16.sp,
+                      //               fontWeight: FontWeight.w500)),
+                      //     ],
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

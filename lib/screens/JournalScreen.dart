@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -26,6 +28,7 @@ class _JournalScreenState extends State<JournalScreen> {
   var mood_id = 0;
   final date = DateTime.now();
   String startdate = "start";
+  TextEditingController searchcontroller=TextEditingController();
   String enddate = "end";
   List mood = [
     "images/happy.png",
@@ -72,7 +75,7 @@ class _JournalScreenState extends State<JournalScreen> {
     print(
         'End of week: ${getDate(date.add(Duration(days: DateTime.daysPerWeek - date.weekday)))}');
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,7 +102,7 @@ class _JournalScreenState extends State<JournalScreen> {
           ),
         ),
         body: SingleChildScrollView(
-        
+        reverse: false,
           child: Column(children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 15, left: 15, right: 15),
@@ -147,14 +150,18 @@ class _JournalScreenState extends State<JournalScreen> {
                       ),
                       onDaySelected: (selectedDay, focusedDay) {
                         if (!isSameDay(_selectedDay, selectedDay)) {
-                          // Call `setState()` when updating the selected day
+                          // Call `setState()` when updating the selected day ghare thi call
                           setState(() {
-                            startdate = selectedDay.toString().split(' ')[0];
+                            // startdate = selectedDay.toString().split(' ')[0].toString().trim();
                             enddate = getDate(selectedDay.add(Duration(
                                     days: DateTime.daysPerWeek -
                                         selectedDay.weekday)))
                                 .toString()
-                                .split('00')[0];
+                                .split('00')[0].toString().trim();
+                            startdate = getDate(selectedDay.subtract(Duration(days: selectedDay.weekday - 1)))
+                                .toString()
+                                .split('00')[0].toString().trim();
+                                
                             _focusedDay = focusedDay;
                           });
                         }
@@ -194,13 +201,18 @@ class _JournalScreenState extends State<JournalScreen> {
                                   top: 8, bottom: 8, left: 13),
                               child: Row(
                                 children: [
-                                  SvgPicture.asset("images/icons/search.svg",
-                                      height: 17.h, width: 17.w),
+                                 
                                   Expanded(
-                                    child: TextFormField(
-                                        showCursor: false,
+                                    child: TextField(
+                                      
+                                        controller: searchcontroller,
+                                        showCursor: true,
+                                        onChanged: (value) {
+                                          value=searchcontroller.text;
+                                        },
                                         decoration: InputDecoration(
                                           hintText: "Search notes",
+
                                           contentPadding:
                                               const EdgeInsets.all(3),
                                           hintStyle: GoogleFonts.inter(
@@ -241,13 +253,20 @@ class _JournalScreenState extends State<JournalScreen> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.75,
               child: StreamBuilder(
-                  stream: FirebaseFirestore.instance
+                  stream:searchcontroller.text.length>=1? 
+                    FirebaseFirestore.instance
                       .collection('users')
                       .doc(uid)
                       .collection('journal')
-                      .where("date", isLessThan: enddate.split('00')[0])
-                      .where("date",
-                          isGreaterThanOrEqualTo: startdate.split('00')[0])
+                      .where("title", isEqualTo: searchcontroller.text)
+                      .snapshots()
+                   : 
+                   FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(uid)
+                      .collection('journal')
+                      .where("date", isLessThan: enddate.split('00')[0].toString().trim())
+                      .where("date",isGreaterThanOrEqualTo: startdate.split('00')[0].toString().trim())
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -258,6 +277,8 @@ class _JournalScreenState extends State<JournalScreen> {
                         ),
                       );
                     } else {
+
+                      print(snapshot.data);
                       final docs = snapshot.data!.docs;
                       return ListView.builder(
                           shrinkWrap: true,

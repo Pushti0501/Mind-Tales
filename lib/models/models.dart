@@ -3,6 +3,7 @@ class Articlemodel{
   final String subtitle;
   final String imgurl;
   final String url;
+
   Articlemodel({required this.title,required this.subtitle,required this.imgurl,required this.url});
 }
 class Anxietymodel{
@@ -18,6 +19,10 @@ class Consultant{
   late final String rating;
   late final int fees;
   late final String availablity;
+  String description;
+  String email;
+  String contact;
+  String location;
   Consultant(
       {required this.name,
       required this.department,
@@ -25,7 +30,8 @@ class Consultant{
       required this.urlavatar,
       required this.rating,
       required this.fees,
-      required this.availablity});
+      required this.availablity,
+      required this.contact,required this.description, required this.email, required this.location});
 }
 class PodcastModel{
   late final String title;

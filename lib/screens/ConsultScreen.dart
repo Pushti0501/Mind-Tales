@@ -3,10 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mind_tales/constants.dart';
-import 'package:mind_tales/screens/ConsultantDEscription.dart';
-import 'package:mind_tales/utils/Recommendations.dart';
+
+// import 'package:mind_tales/utils/Recommendations.dart';
+
 
 import '../models/models.dart';
+import 'ConsultantDescription.dart';
 
 class ConsultantModule extends StatefulWidget {
   @override
@@ -14,7 +16,7 @@ class ConsultantModule extends StatefulWidget {
 }
 
 class _ConsultantModuleState extends State<ConsultantModule> {
-  List<Consultant> consultants = [
+  static List<Consultant> consultants = [
     Consultant(
       name: 'Dr. Claudia Francis',
       department: 'M.B.B.S DNB Psychiatry',
@@ -24,6 +26,11 @@ class _ConsultantModuleState extends State<ConsultantModule> {
       rating: "4.8",
       fees: 2000,
       availablity: "7am to 12pm",
+      description: "Dr. Claudia Francis is a highly experienced psychiatrist with a decade of practice in diagnosing and treating mental health disorders. He is a recognized authority in the field of psychiatry.Dr. Service holds a medical degree from a prestigious institution, and has completed a rigorous psychiatry residency program where he received advanced training in various areas of mental health. He is also a sought-after speaker and presenter, and has published numerous articles and research papers on the subject of psychiatry.",
+      email: "abc@gmail.com",
+      contact: "9876543219",
+      location: "California"
+
     ),
     Consultant(
       department: 'M.B.B.S DNB Psychiatry',
@@ -34,6 +41,10 @@ class _ConsultantModuleState extends State<ConsultantModule> {
       rating: "4.9",
       fees: 1700,
       availablity: "9am to 1pm",
+      email: "abc@gmail.com",
+      contact: "9876543219",
+      location: "California",
+      description: "Dr. Smit Patel obtained his medical degree and completed his psychiatry residency at a highly regarded institution, where he received extensive training in the latest techniques and treatments in the field of psychiatry. He has also pursued additional education and training in specialized areas of psychiatry, including child and adolescent psychiatry and addiction psychiatry."
     ),
     Consultant(
       name: 'Dr. Vikram Patel',
@@ -44,17 +55,12 @@ class _ConsultantModuleState extends State<ConsultantModule> {
       rating: "4.7",
       fees: 950,
       availablity: "10am to 3pm",
+      email: "abc@gmail.com",
+      contact: "9876543219",
+      location: "California",
+      description: "Dr. Vikram Patel is a skilled psychiatrist with 2 years of experience in the diagnosis and treatment of mental health disorders. He is a dedicated and compassionate professional who is committed to providing the highest level of care to his patients."
     ),
-    Consultant(
-      name: 'Dr. Jay Thummar',
-      department: 'M.B.B.S DNB Psychiatry',
-      experience: '2+ Years of Experience',
-      urlavatar:
-          'https://images.unsplash.com/photo-1622902046580-2b47f47f5471?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
-      rating: "4.9",
-      fees: 1500,
-      availablity: "9am to 3pm",
-    ),
+  
     Consultant(
       name: 'Dr. Nishant Patel',
       department: 'M.B.B.S DNB Psychiatry',
@@ -64,6 +70,10 @@ class _ConsultantModuleState extends State<ConsultantModule> {
       rating: "4.9",
       fees: 2000,
       availablity: "9am to 5pm",
+      email: "abc@gmail.com",
+      contact: "9876543219",
+      location: "California",
+      description: "Dr. Nishant Patel obtained his medical degree from a well-regarded institution and completed his psychiatry residency program, where he received extensive training in the latest treatments and techniques in the field of psychiatry. He has also pursued additional education and training in specialized areas of psychiatry, including forensic psychiatry and psychopharmacology"
     ),
     Consultant(
       name: 'Dr. Hasti Bhalodiya',
@@ -74,6 +84,10 @@ class _ConsultantModuleState extends State<ConsultantModule> {
       rating: "4.5",
       fees: 1000,
       availablity: "8am to 3pm",
+      email: "abc@gmail.com",
+      contact: "9876543219",
+      location: "California",
+      description: "Dr. Hasti Bhalodiya is a skilled and compassionate psychiatrist with 5 years of experience in diagnosing and treating mental health disorders. She is dedicated to providing the highest level of care to her patients, and is known for her patient-centered approach and ability to build strong relationships with her patients."
     ),
     Consultant(
       name: 'Dr. Bhaumik Parikh',
@@ -84,6 +98,10 @@ class _ConsultantModuleState extends State<ConsultantModule> {
       rating: "4.6",
       fees: 990,
       availablity: "9am to 3pm",
+      email: "abc@gmail.com",
+      contact: "9876543219",
+      location: "California",
+      description: "Dr. Bhaumik Parikh obtained his medical degree from a prestigious institution and completed his psychiatry residency program where he received advanced training in various areas of mental health. He has also pursued additional education and training in specialized areas of psychiatry, including geriatric psychiatry and mood disorders."
     ),
     Consultant(
       name: 'Dr. Hina Shah',
@@ -94,6 +112,10 @@ class _ConsultantModuleState extends State<ConsultantModule> {
       rating: "4.9",
       fees: 2500,
       availablity: "7am to 2pm",
+      email: "abc@gmail.com",
+      contact: "9876543219",
+      location: "California",
+      description: "Dr. Hina Shah received her medical degree from a top-tier institution and completed his psychiatry residency program where she received advanced training in various areas of mental health. She has also pursued additional education and training in specialized areas of psychiatry, including psychotherapy and psychopharmacology."
     ),
   ];
   @override
@@ -129,8 +151,8 @@ class _ConsultantModuleState extends State<ConsultantModule> {
           itemBuilder: (BuildContext context, int index) {
             final consultant = consultants[index];
             return Container(
-              padding: EdgeInsets.symmetric(vertical: 15),
-              margin: EdgeInsets.all(8),
+              padding: EdgeInsets.symmetric(vertical: 10),
+              margin: EdgeInsets.all(5.h),
               height: 154.h,
               width: 333.w,
               decoration: BoxDecoration(
@@ -180,12 +202,14 @@ class _ConsultantModuleState extends State<ConsultantModule> {
                                       fontSize: 18.sp,
                                       fontWeight: FontWeight.w600),
                                 ),
+                              
                                 Text(
                                   consultant.department,
                                   style: GoogleFonts.inter(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w400),
                                 ),
+                               
                                 Text(
                                   consultant.experience,
                                   style: GoogleFonts.inter(
@@ -218,8 +242,9 @@ class _ConsultantModuleState extends State<ConsultantModule> {
                               style: GoogleFonts.inter(
                                   fontSize: 16.sp, fontWeight: FontWeight.w600),
                             ),
+                            SizedBox(height: 5.h,),
                             Text(
-                              'Availability: ' + consultant.availablity,
+                              'Availability: ${consultant.availablity}',
                               style: GoogleFonts.inter(
                                   fontSize: 14.sp, fontWeight: FontWeight.w400),
                             ),
@@ -236,7 +261,9 @@ class _ConsultantModuleState extends State<ConsultantModule> {
                           child: Center(
                               child: InkWell(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>ConsultantDescription()));
+                           Navigator.push(context, MaterialPageRoute(builder: (context)=> ConsultantDescription(name: consultant.name, department: consultant.department, experience: consultant.experience, urlavatar: consultant.urlavatar, rating: consultant.rating, fees: consultant.fees, availablity: consultant.availablity,location: consultant.location,contact: consultant.contact,email:consultant.email,description: consultant.description,)));
+
+
                               // showDialog(
                               //     context: context,
                               //     builder: (BuildContext context) {

@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
 import '../models/models.dart';
+import '../providers/uri_controller.dart';
 
 class PodcastScreen extends StatefulWidget {
   const PodcastScreen({super.key});
@@ -83,90 +85,86 @@ class _PodcastScreenState extends State<PodcastScreen> {
         host: "Guided Meditations Podcastification",
         url: "https://open.spotify.com/track/6LFnijghQGljKIdpzSRcC9"),
   ];
-  _launchURL(String link) async {
-    print(link);
-    final uri = Uri.parse(link);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    } else {
-      throw 'Could not launch $uri';
-    }
-  }
+ 
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Theme.of(context).primaryColor,
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-              size: 30,
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          automaticallyImplyLeading: false,
+  Widget build(BuildContext context,) {
+    return Consumer<Launch>(
+      
+      builder: (context, value, child) {return Scaffold(
           backgroundColor: Theme.of(context).primaryColor,
-          title: Text(
-            "Podcast",
-            style: GoogleFonts.inter(
-                fontSize: 20.sp,
+          appBar: AppBar(
+            leading: IconButton(
+              icon: const Icon(
+                Icons.arrow_back,
                 color: Colors.black,
-                fontWeight: FontWeight.w600),
+                size: 30,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            automaticallyImplyLeading: false,
+            backgroundColor: Theme.of(context).primaryColor,
+            title: Text(
+              "Podcast",
+              style: GoogleFonts.inter(
+                  fontSize: 20.sp,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600),
+            ),
           ),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: ListView.builder(
-            itemCount: podcasts.length,
-            itemBuilder: (BuildContext context, int index) {
-              final podcast = podcasts[index];
-              return Container(
-                height: 64.h,
-                width: 360.w,
-                child: Row(
-                  children: [
-                    Container(
-                      height: 56.h,
-                      width: 56.w,
-                      child: Image.network(podcast.img),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            podcast.title,
-                            style: GoogleFonts.inter(
-                                fontSize: 16.sp, fontWeight: FontWeight.w600),
-                          ),
-                          SizedBox(height: 4.h),
-                          Text(
-                            podcast.host,
-                            style: GoogleFonts.inter(
-                                fontSize: 12.sp, fontWeight: FontWeight.w400),
-                          )
-                        ],
+          body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ListView.builder(
+              itemCount: podcasts.length,
+              itemBuilder: (BuildContext context, int index) {
+                final podcast = podcasts[index];
+                return Container(
+                  height: 64.h,
+                  width: 360.w,
+                  child: Row(
+                    children: [
+                      Container(
+                        height: 56.h,
+                        width: 56.w,
+                        child: Image.network(podcast.img),
                       ),
-                    ),
-                    Spacer(),
-                    InkWell(
-                      onTap: () {
-                        _launchURL(podcast.url);
-                      },
-                      child: SvgPicture.asset("images/icons/Play.svg",
-                          width: 35.w, height: 35.h),
-                    )
-                  ],
-                ),
-              );
-            },
-          ),
-        ));
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              podcast.title,
+                              style: GoogleFonts.inter(
+                                  fontSize: 16.sp, fontWeight: FontWeight.w600),
+                            ),
+                            SizedBox(height: 4.h),
+                            Text(
+                              podcast.host,
+                              style: GoogleFonts.inter(
+                                  fontSize: 12.sp, fontWeight: FontWeight.w400),
+                            )
+                          ],
+                        ),
+                      ),
+                      const Spacer(),
+                      InkWell(
+                        onTap: () {
+                          Provider.of<Launch>(context,listen: false).launchURL(podcast.url);
+                        },
+                        child: SvgPicture.asset("images/icons/Play.svg",
+                            width: 35.w, height: 35.h),
+                      )
+                    ],
+                  ),
+                );
+              },
+            ),
+          )); }
+    
+    );
   }
 }

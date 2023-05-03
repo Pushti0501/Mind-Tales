@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mind_tales/constants.dart';
-import 'package:mind_tales/screens/HomeScreen.dart';
 
 class OnBoardingContainer extends StatelessWidget {
   late final String img;
   late final String title;
   late final String description;
  
-  OnBoardingContainer(
+   OnBoardingContainer(
       {required this.img, required this.title, required this.description});
       void onNavigate(){
         
@@ -25,14 +24,14 @@ class OnBoardingContainer extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             child: Image(image: AssetImage(img))),
         Container(
-          margin: EdgeInsets.only(top: 10),
+          margin: const EdgeInsets.only(top: 10),
           child: Text(
             title,
             style: kHeading,
           ),
         ),
         Container(
-          margin: EdgeInsets.all(15.0),
+          margin: const EdgeInsets.all(15.0),
           child: Text(description,
               textAlign: TextAlign.center, style: kSubHeading),
         ),
@@ -59,8 +58,9 @@ class _EmojicontainerState extends State<Emojicontainer> {
     return Container(
         height: 69.h,
         width: 55.w,
-      margin: EdgeInsets.only(right:14).w,
+      margin: const EdgeInsets.only(right:14).w,
         decoration: BoxDecoration(
+          color:widget.select?Colors.grey.shade300:Colors.white,
             borderRadius: BorderRadius.circular(10.0).r,
             border: Border.all(color: widget.select?Colors.grey:Theme.of(context).primaryColorDark)),
         child: Padding(

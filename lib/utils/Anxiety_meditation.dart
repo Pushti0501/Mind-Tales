@@ -4,7 +4,10 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mind_tales/models/models.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../providers/uri_controller.dart';
 
 class Anxiety extends StatefulWidget {
   const Anxiety({super.key});
@@ -72,44 +75,49 @@ class _AnxietyState extends State<Anxiety> {
             "https://i.ytimg.com/vi/_19sQY5pna8/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAthJ5lfXxoOsX5-UDX5im4g4dSCA",
         url: "https://www.youtube.com/watch?v=_19sQY5pna8"),
   ];
-  _launchURL(String link) async {
-    print(link);
-    final uri = Uri.parse(link);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    } else {
-      throw 'Could not launch $uri';
-    }
-  }
+  // _launchURL(String link) async {
+  //   print(link);
+  //   final uri = Uri.parse(link);
+  //   if (await canLaunchUrl(uri)) {
+  //     await launchUrl(uri);
+  //   } else {
+  //     throw 'Could not launch $uri';
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 143.h,
-      child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: anxiety.length,
-          itemBuilder: (context, index) {
-            final anxiety_mediatation = anxiety[index];
-
-            return Padding(
-              padding: const EdgeInsets.only(left: 3, right: 3),
-              child: Stack(alignment: Alignment.center, children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.network(anxiety_mediatation.imgurl,
-                      height: 147.h, width: 143.w, fit: BoxFit.fill),
-                ),
-                InkWell(
-                  onTap: () {
-                    _launchURL(anxiety_mediatation.url);
-                  },
-                  child: SvgPicture.asset("images/icons/Play.svg",
-                      width: 35.w, height: 35.h),
-                ),
-              ]),
-            );
-          }),
+    return Consumer<Launch>(
+      
+      builder: (context, value, child) { 
+        return SizedBox(
+        height: 143.h,
+        child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: anxiety.length,
+            itemBuilder: (context, index) {
+              final anxiety_mediatation = anxiety[index];
+    
+              return Padding(
+                padding: const EdgeInsets.only(left: 3, right: 3),
+                child: Stack(alignment: Alignment.center, children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.network(anxiety_mediatation.imgurl,
+                        height: 147.h, width: 143.w, fit: BoxFit.fill),
+                  ),
+                  InkWell(
+                    onTap: () {
+                  Provider.of<Launch>(context,listen:false).launchURL(anxiety_mediatation.url);
+                    },
+                    child: SvgPicture.asset("images/icons/Play.svg",
+                        width: 35.w, height: 35.h),
+                  ),
+                ]),
+              );
+            }),
+      ); },
+    
     );
   }
 }

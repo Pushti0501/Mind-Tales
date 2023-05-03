@@ -36,12 +36,25 @@ class _RecommendationsState extends State<Recommendations> {
             'https://cdn.pixabay.com/photo/2016/05/10/21/50/meditation-1384758_960_720.jpg',
         subtitle: 'Meditaion',
         url: 'https://youtu.be/6p_yaNFSYao'),
+         RecommendationsModel(
+        title: 'Inner Peace',
+        subtitle: 'Article',
+        imgurl:
+            'https://media.istockphoto.com/id/1313456479/photo/man-and-soul-yoga-lotus-pose-meditation-on-nebula-galaxy-background.jpg?s=612x612&w=0&k=20&c=jJ0pVed-sHjDBtomrO7KmR4qtIfH8OaNhjmEsXvJmAI=',
+        url:
+            'https://www.innerpeacenow.com/finding-inner-peace'),
         RecommendationsModel(
         title: 'Talk to Yourself',
         imgurl:
             'https://i.pinimg.com/564x/2b/35/85/2b358571ece7214cbf738a1aabd3158e.jpg',
         subtitle: 'Podcast',
         url:'https://open.spotify.com/episode/7zLHS9cwcaAaY2B1Li08gZ'),
+        RecommendationsModel (
+        imgurl:
+            "https://i.ytimg.com/vi/COp7BR_Dvps/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBPSSRP3cV7wKqRv0oot5mnuMJrsw",
+        url: "https://www.youtube.com/watch?v=COp7BR_Dvps",
+        title: "Relaxing Yoga",subtitle: "Yoga"),
+        
   
     RecommendationsModel(
         title: 'Comfort',
@@ -61,6 +74,18 @@ class _RecommendationsState extends State<Recommendations> {
             'https://cdn.pixabay.com/photo/2020/07/07/13/52/woman-5380651_960_720.jpg',
         subtitle: 'Meditation',
         url:"https://youtu.be/7HQq88o1_ms"),
+        RecommendationsModel(
+        title: 'Mental Peace',
+        subtitle: 'Article',
+        imgurl:
+            'https://images.unsplash.com/photo-1542353436-312f0e1f67ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cmVsaWVmfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
+        url:
+            'https://medium.com/spiritual-secrets/how-to-hold-onto-our-mental-peace-7b2d6071770d'),
+       RecommendationsModel (
+        imgurl:
+            "https://i.ytimg.com/vi/8TuRYV71Rgo/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBQM8aeLZYuuuLxH7KWCpoutnqEiA",
+        url: "https://www.youtube.com/watch?v=8TuRYV71Rgo",
+        title: "Relief Stress",subtitle: "Yoga"),
     RecommendationsModel(
         title: 'Find Positivity',
         imgurl:

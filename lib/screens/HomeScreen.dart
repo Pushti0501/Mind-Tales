@@ -46,10 +46,10 @@ class _HomeScreenState extends State<HomeScreen> {
   final FirebaseAuth auth = FirebaseAuth.instance;
 
 
-void initialize() async{
- var document = await FirebaseFirestore.instance.collection('users').where('contactnumber',isEqualTo: '9879870536').get();
-  print(document);
-}
+// void initialize() async{
+//  var document = await FirebaseFirestore.instance.collection('users').where('contactnumber',isEqualTo: '9879870536').get();
+//   print(document);
+// }
  getuid() async {
     final User? user = auth.currentUser;
     print(user?.uid);
@@ -61,7 +61,8 @@ void initialize() async{
   @override
   void initState(){
     super.initState();
-        getuid();
+        // getuid();
+        _loadUserData();
   
    
   }
@@ -71,16 +72,14 @@ void initialize() async{
   //   setState(() {});
   //   print(user);
   // }
+  
+Future<void> _loadUserData() async {
+
+  }
   @override
   Widget build(BuildContext context) {
   
-    return StreamBuilder(
-      stream: FirebaseFirestore.instance
-        .collection('users')
-        .doc(uid)
-        .snapshots(),
-        builder: (context, snapshot) {
-          final docs = snapshot.data;
+  
              return Scaffold(
         
         backgroundColor: Theme.of(context).primaryColor,
@@ -95,7 +94,7 @@ void initialize() async{
                   ), //BoxDecoration
                   child: Row(
                     children: [
-                      docs!['profile_photo'] == 'abc'?
+                      profile_photo == 'abc'?
                       CircleAvatar(
                         radius: 32.0.r,
                         
@@ -103,7 +102,7 @@ void initialize() async{
                       ): CircleAvatar(
                         radius: 32.0.r,
                         
-                        backgroundImage: NetworkImage(docs['profile_photo']),
+                        backgroundImage: NetworkImage(profile_photo)
                       ),
                       SizedBox(
                         width: 10.w,
@@ -113,14 +112,16 @@ void initialize() async{
                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                           docs['username'] ,
+                          _name,
+                         
                             style: GoogleFonts.inter(
                                 fontSize: 18.sp,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            docs['email'].length >= 20 ?  docs['email'].replaceRange(20, docs['email'].length, '...'):docs['email'],
+                            
+                            _email.length >= 20 ?  _email.replaceRange(20, _email.length, '...'):_email,
                             maxLines: 1,
                             style: GoogleFonts.inter(
                               fontSize: 14.sp,
@@ -148,14 +149,14 @@ void initialize() async{
                   },
                 ),
                  ListTile(
-                  leading: SvgPicture.asset("images/icons/yoga.svg"),
+                  leading: SvgPicture.asset("images/icons/yoga.svg",height:28.h,width:30.w,color: Colors.grey.shade600,),
                   title: const Text('Yoga'),
                   onTap: () {
                      Navigator.push(context, MaterialPageRoute(builder: (context) => const YogaScreen()));
                   },
                 ),
                  ListTile(
-                  leading: SvgPicture.asset("images/icons/meditation.svg"),
+                  leading: SvgPicture.asset("images/icons/meditation.svg",height:25.h,width:25.w,color: Colors.grey.shade600,),
                   title: const Text('Meditation'),
                   onTap: () {
                      Navigator.push(context, MaterialPageRoute(builder: (context) => const MeditationScreen()));
@@ -305,8 +306,8 @@ void initialize() async{
           ),
         ),
       );
-        },
+        }
    
-    );
+    
   }
-}
+

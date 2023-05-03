@@ -6,9 +6,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mind_tales/screens/JournalScreen.dart';
+import 'package:uuid/uuid.dart';
 
 class WritingJournal extends StatefulWidget {
   const WritingJournal({super.key});
+ 
 
   @override
   State<WritingJournal> createState() => _WritingJournalState();
@@ -20,8 +22,26 @@ class _WritingJournalState extends State<WritingJournal> {
    DateTime date = DateTime.now();
    String formateddate=DateFormat.MMMd().format(DateTime.now());
    final auth=FirebaseAuth.instance;
- 
+    var uuid=Uuid();  
+    onSave()async{
+                                       var  uid=uuid.v1();
 
+                         await FirebaseFirestore.instance.collection('users').doc(auth.currentUser!.uid).collection('journal').doc(uid).set({
+                          'title':titlecontroller.text,
+                          'description':descriptioncontroller.text,
+                          'uid':uid,
+                          'date':date.toString().split(' ')[0]
+                         });
+                          Fluttertoast.showToast(msg: "Data added");
+                         // ignore: use_build_context_synchronously
+                         Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const JournalScreen(),
+                            ));
+                    
+
+    }  
    
 @override
  
@@ -53,20 +73,8 @@ class _WritingJournalState extends State<WritingJournal> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5.r),
                       color: Theme.of(context) .primaryColorDark                   ),
-                    child: MaterialButton(onPressed: () async{
-                         await FirebaseFirestore.instance.collection('users').doc(auth.currentUser!.uid).collection('journal').add({
-                          'title':titlecontroller.text,
-                          'description':descriptioncontroller.text,
-                      
-                          'date':date.toString().split(' ')[0]
-                         });
-                          Fluttertoast.showToast(msg: "Data added");
-                         // ignore: use_build_context_synchronously
-                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const JournalScreen(),
-                            ));
+                    child: MaterialButton(onPressed: () {
+                      onSave();
                     },
                     child: Text("Save",style: GoogleFonts.inter(fontSize: 16.sp,color: Colors.white)),),
                   )
